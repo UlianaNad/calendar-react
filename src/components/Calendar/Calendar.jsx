@@ -44,7 +44,7 @@ const Calendar = () => {
                 todayHandler = {todayHandler}
                 nextHandler = {nextHandler}
             />
-            <GridCalendar startDay={startDay}/>
+            <GridCalendar startDay={startDay} today={today}/>
         </ShadowWrapper>
     );
 };
