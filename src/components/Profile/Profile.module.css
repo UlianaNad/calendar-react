@@ -1,0 +1,35 @@
+.app-wrapper{
+    /* margin: 0 auto;
+    width: 1200px; */
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    grid-template-rows: 60px 1fr;
+    gap: 10px;
+    grid-template-areas: 
+      "hed hed"
+      "nav cont";
+  }
+  .header{
+    grid-area: hed;
+  }
+  .header img{
+    width: 30px;
+  }
+  .Nav{
+    grid-area: nav;
+  }
+  
+  
+  .content{
+    grid-area: cont;
+  }
+    
+  a{
+    text-decoration: none;
+    padding: 5px 0px;
+  }
+  
+  
+  .logo{
+    width:40px;
+  }

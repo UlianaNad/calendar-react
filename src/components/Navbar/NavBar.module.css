@@ -1,0 +1,13 @@
+.active{
+    color: gold;
+    font-weight: 500;
+}
+a{
+    font-weight: 500;
+}
+
+.Nav{
+  grid-area: nav;
+  background-color: rgb(220, 250, 240);
+  padding: 10px;
+}
