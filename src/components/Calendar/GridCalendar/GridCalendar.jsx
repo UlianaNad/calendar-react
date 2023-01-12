@@ -25,7 +25,7 @@ const RowInCell = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: ${props =>props.justifyContent ? props.justifyContent : 'flex-start'};
-    ${props => props.pr && 'padding-right: ${props.pr * 8}px'}
+    padding: ${props => props.pr && 'padding-right: ${props.pr * 8}px'}
     `;
 
 const DayWrapper = styled.div`
@@ -35,6 +35,7 @@ const DayWrapper = styled.div`
     align-items: center;
     justify-content: center;
     margin: 2px;
+    cursor: pointer;
     `;
 
 const CurrentDay = styled.div 
@@ -73,7 +74,7 @@ const EventItemWrapper = styled('button')`
     padding: 0;
 `;
 
-const GridCalendar = ({startDay, today, totalDays, events}) => {
+const GridCalendar = ({startDay, today, totalDays, events, openFormHandler}) => {
     const day = startDay.clone().subtract(1, 'day');
     
     const daysArray = [...Array(totalDays)].map(() => day.add(1, 'day').clone());
@@ -85,7 +86,7 @@ const GridCalendar = ({startDay, today, totalDays, events}) => {
         <div>
             <GridWrapper isHeader>
                 {[...Array(7)].map((_,i) =>(
-                    <CellWrapper isHeader isSelectedMonth>
+                    <CellWrapper isHeader isSelectedMonth key={i}>
                         <RowInCell justifyContent={'flex-end'} pr={1}>
                             {moment().day(i+1).format('ddd')}
                         </RowInCell>
@@ -101,7 +102,7 @@ const GridCalendar = ({startDay, today, totalDays, events}) => {
                             > 
                     <RowInCell justifyContent={'flex-end'}>
                         <ShowDayWrapper>
-                            <DayWrapper>
+                            <DayWrapper onDoubleClick={(e) => openFormHandler('Create')}>
                                 {
                                     isCurrentDay(dayItem) ? (<CurrentDay>{dayItem.format('D')}</CurrentDay>) : (dayItem.format('D'))
                                 }
@@ -109,10 +110,10 @@ const GridCalendar = ({startDay, today, totalDays, events}) => {
                         </ShowDayWrapper>
                         <EventListWrapper>
                             {
-                                events.filter(event => event.date >= dayItem.format('X') && event.date <=dayItem.clone().endOf('day').format('X'))
+                                events.filter(event => event.date >= dayItem.format('X') && event.date <= dayItem.clone().endOf('day').format('X') == true)
                                 .map(event => (
-                                    <li key={event.id}>
-                                        <EventItemWrapper>
+                                    <li key = {event.id}>
+                                        <EventItemWrapper onDoubleClick = {(e) => openFormHandler('Update',event)}>
                                             {event.title}
                                         </EventItemWrapper>
                                     </li>
