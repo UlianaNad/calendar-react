@@ -102,7 +102,7 @@ const GridCalendar = ({startDay, today, totalDays, events, openFormHandler}) => 
                             > 
                     <RowInCell justifyContent={'flex-end'}>
                         <ShowDayWrapper>
-                            <DayWrapper onDoubleClick={(e) => openFormHandler('Create')}>
+                            <DayWrapper onDoubleClick={() => openFormHandler('Create')}>
                                 {
                                     isCurrentDay(dayItem) ? (<CurrentDay>{dayItem.format('D')}</CurrentDay>) : (dayItem.format('D'))
                                 }
@@ -113,7 +113,7 @@ const GridCalendar = ({startDay, today, totalDays, events, openFormHandler}) => 
                                 events.filter(event => event.date >= dayItem.format('X') && event.date <= dayItem.clone().endOf('day').format('X') == true)
                                 .map(event => (
                                     <li key = {event.id}>
-                                        <EventItemWrapper onDoubleClick = {(e) => openFormHandler('Update',event)}>
+                                        <EventItemWrapper onDoubleClick = {() => openFormHandler('Update',event)}>
                                             {event.title}
                                         </EventItemWrapper>
                                     </li>

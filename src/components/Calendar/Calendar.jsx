@@ -72,7 +72,7 @@ const EventBody = styled('input')`
     outline: unset;
 `;
 
-const url = 'http://localhost:4000/';
+const url = 'http://localhost:4000';
 
 const defaultEvent = {
     title: '',
@@ -110,7 +110,7 @@ const Calendar = () => {
     // console.log("end:", endDateQuery);
 
    useEffect(() => {
-    fetch(`${url}events?date_gte=${startDateQuery}&date_lte=${endDateQuery}`)
+    fetch(`${url}/events?date_gte=${startDateQuery}&date_lte=${endDateQuery}`)
         .then(res=> res.json())
         .then(res=> {
             //console.log('Response', res);
@@ -161,6 +161,30 @@ const changeEventHandler = (text, field) => {
 
     }))
 }
+
+const eventFetchHandler = () =>{
+    const fetchUrl = method === 'Update' ? `${url}/events/${event.id}` : `${url}/events`;
+    const httpMethod = method === 'Update' ? 'PATCH' : 'POST' ;
+
+    fetch(fetchUrl, {
+        method: httpMethod,
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(event)
+    })
+    .then(res => res.json())
+    .then(res => {
+        if(method === 'Update'){
+            setEvents( prevState => prevState.map(eventEl => eventEl.id === res.id ? res : eventEl))
+        } else {
+            setEvents(prevState => [...prevState, res]);
+            console.log(res);
+
+        }
+        cancelButtonHandler()
+    })
+}
     return(
       <DivWrapper>
         {
@@ -177,7 +201,7 @@ const changeEventHandler = (text, field) => {
                         />
                         <ButtonsWrapper>
                             <button onClick={cancelButtonHandler}>Cancel</button>
-                            <button>{method}</button>
+                            <button onClick={eventFetchHandler}>{method}</button>
                         </ButtonsWrapper>
                     
                     </FormWrapper>    
